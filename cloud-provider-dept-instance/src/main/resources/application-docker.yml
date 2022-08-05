@@ -1,0 +1,97 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: cloud-config-dept-client
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+#    driver-class-name: org.mariadb.jdbc.Driver              # mariadb驱动包
+    driver-class-name: com.mysql.cj.jdbc.Driver              # mariadb驱动包
+#    url: jdbc:mariadb://localhost:3306/cloudDB01              # 数据库名称
+#    url: jdbc:mysql://localhost:3306/cloudDB01              # 数据库名称
+    # 数据库名称
+    url: jdbc:mysql://localhost:3306/clouddb01?useUnicode=true&serverTimezone=Asia/Shanghai&useSSL=false&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+  kafka:    bootstrap-servers:    - localhost:9092
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: wurstmeister-kafka:9092
+          auto-create-topics: true  boot:    admin:      client:        url:        - http://localhost:7020        instance:          service-url: http://admin:7020
+mybatis-plus:
+#  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  mapper-locations: classpath*:/mapper/*.xml # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  # 支持统配符 * 或者 ; 分割
+  typeEnumsPackage: tech.dhjt.cloud.*.enums
+  type-aliases-super-type: java.lang.Object
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    call-setters-on-nulls: false # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    map-underscore-to-camel-case: true # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    default-fetch-size: 512
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "localhost"
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://eureka-1:8080/eureka,http://eureka-2:8080/eureka
+#       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: cloud-dept
+    prefer-ip-address: true     #访问路径可以显示IP地址
+knife4j: # swagger
+  enable: true
+#  markdowns: classpath:markdown/* # classpath:markdown/*
+  setting:
+    language: zh-CN
+    enableSwaggerModels: true
+    enableDocumentManage: true
+    swaggerModelName: 实体类列表
+    enableVersion: false
+    enableReloadCacheParameter: false
+    enableAfterScript: true
+    enableFilterMultipartApiMethodType: POST
+    enableFilterMultipartApis: false
+    enableRequestCache: true
+    enableHost: false
+    enableHostText: 192.168.0.193:8000
+    enableHomeCustom: true
+    homeCustomLocation: classpath:markdown/* # classpath:markdown/* classpath:markdown/home.md
+    enableSearch: true
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Copyright  2021-DHJT
+    enableDynamicParameter: false
+    enableDebug: true
+    enableOpenApi: false
+    enableGroup: true
+  cors: false
+  production: false
+  basic:
+    enable: false
+    username: test
+    password: 12313
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开启监控端点 "*" hystrix.stream
+        include: "*"
+
+info:
+  app.name: dhjt-cloud
+  company.name: www.dhjt.tech
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

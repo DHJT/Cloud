@@ -1,0 +1,23 @@
+server:
+  port: 9527
+  
+spring:  application:    name: cloud-zuul-gateway
+    
+eureka:  client:    service-url:#      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+      defaultZone: http://localhost:7001/eureka
+  instance:    instance-id: gateway-zuul.com
+    prefer-ip-address: true
+
+zuul: 
+  #ignored-services: cloud-dept
+  prefix: /dhjt
+  ignored-services: "*"
+  routes: 
+    mydept.serviceId: cloud-config-dept-client
+    mydept.path: /mydept/**
+
+info:
+  app.name: dhjt-microservicecloud
+  company.name: www.dhjt.tech
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

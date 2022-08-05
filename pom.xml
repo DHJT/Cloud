@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tech.dhjt.cloud</groupId>
+	<artifactId>cloud-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- <parent> -->
+	<!-- <groupId>org.springframework.boot</groupId> -->
+	<!-- <artifactId>spring-boot-starter-parent</artifactId> -->
+	<!-- <version>2.1.7.RELEASE</version> -->
+	<!-- </parent> -->
+	<parent>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-parent</artifactId>
+		<version>Hoxton.SR8</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<lombok.version>1.16.18</lombok.version>
+		<druid.version>1.1.16</druid.version>
+		<spring-boot-admin.version>2.3.0</spring-boot-admin.version>
+		<java.version>1.8</java.version>
+        <swagger.version>2.7.0</swagger.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
+<!--         <knife4j.version>2.0.4</knife4j.version> -->
+        <knife4j.version>3.0.2</knife4j.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+<!-- 			<dependency> -->
+<!-- 			    <groupId>org.springframework.cloud</groupId> -->
+<!-- 			    <artifactId>spring-cloud-starter</artifactId> -->
+<!-- 			    <version>2.1.2.RELEASE</version> -->
+<!-- 			</dependency> -->
+			
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.springframework.boot</groupId> -->
+<!-- 				<artifactId>spring-boot-dependencies</artifactId> -->
+<!-- 				<version>2.2.5.RELEASE</version> -->
+<!-- 				<type>pom</type> -->
+<!-- 				<scope>import</scope> -->
+<!-- 			</dependency> -->
+			<!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-dependencies knife4j-spring-boot-starter knife4j-micro-spring-boot-starter -->
+			<dependency>
+			    <groupId>com.github.xiaoymin</groupId>
+			    <artifactId>knife4j-dependencies</artifactId>
+			    <version>${knife4j.version}</version>
+			    <type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-starter-server</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-lang3</artifactId>
+			    <version>${commons-lang3.version}</version>
+			</dependency>
+<!-- 			<dependency> -->
+<!-- 				<groupId>mysql</groupId> -->
+<!-- 				<artifactId>mysql-connector-java</artifactId> -->
+<!-- 				<version>5.0.4</version> -->
+<!-- 			</dependency> -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.baomidou</groupId>
+			    <artifactId>mybatis-plus-boot-starter</artifactId>
+			    <version>${mybatis-plus.version}</version>
+			</dependency>
+            <dependency>
+	            <groupId>com.baomidou</groupId>
+	            <artifactId>mybatis-plus-generator</artifactId>
+	            <version>${mybatis-plus.version}</version>
+	            <scope>test</scope>
+	        </dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+<!-- 		<finalName>${artifactId}</finalName> -->
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-resources-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<delimiters> -->
+<!-- 						<delimit>$</delimit> -->
+<!-- 					</delimiters> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>    <!--默认关掉单元测试 -->
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>cloud-api</module>
+<!-- 		<module>cloud-provider-dept-8001</module> -->
+		<module>cloud-provider-dept-instance</module>
+		<module>cloud-consumer-dept-feign</module>
+<!-- 		<module>cloud-eureka-7001</module> -->
+<!-- 		<module>cloud-zuul-gateway</module> -->
+<!-- 	    <module>cloud-config-server</module> -->
+<!-- 	    <module>cloud-config-server-local</module> -->
+<!-- 	    <module>cloud-turbine</module> -->
+	    <module>cloud-turbine</module>
+	    <module>cloud-admin</module>
+		<module>cloud-doc</module>
+		<module>cloud-turbine-stream</module>
+	</modules>
+</project>

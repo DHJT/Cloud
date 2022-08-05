@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: cloud-config-dept-client
+  profiles:
+    active:
+    - dev

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tech.dhjt.cloud.dept.mapper.DeptMapper">
+
+	<!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="tech.dhjt.cloud.entity.Dept">
+        <id column="dept_no" property="deptNo" />
+        <result column="dept_name" property="deptName" />
+        <result column="db_source" property="dbSource" />
+    </resultMap>
+
+	<select id="findById" resultMap="BaseResultMap">
+<!-- 	<select id="findById" resultMap="BaseResultMap" parameterType="Long"> -->
+<!-- 		select deptno,dname,db_source from dept where deptno=#{deptNo}; -->
+		select dept_no,dept_name,db_source from dept where dept_no=1;
+	</select>
+	
+	<select id="findAll" resultMap="BaseResultMap">
+	select dept_no,dept_name,db_source from dept;
+	</select>
+	
+	<insert id="addDept" parameterType="tech.dhjt.cloud.entity.Dept">
+	INSERT INTO dept(dept_name,db_source) VALUES(#{dept_name},DATABASE());
+	</insert>
+
+</mapper>
+ 
